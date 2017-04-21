@@ -32,7 +32,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -87,13 +87,12 @@ public class SampleControllerTest {
 	@Test
 	public void testviews() throws Exception {
 		// 测试普通控制器
-		mockMvc.perform(get("/sample/{pagesize}/{pagenum}", 21)) // 执行请求
-				.andExpect(model().attributeExists("bean")) // 验证存储模型数据
-				.andExpect(model().attribute("bean", hasProperty("name", equalTo("zhang")))) // 验证存储模型数据
-				.andExpect(view().name("user/view")) // 验证viewName
-				.andExpect(forwardedUrl("/WEB-INF/jsp/user/view.jsp"))// 验证视图渲染时forward到的jsp
-				.andExpect(status().isOk())// 验证状态码
-				.andDo(print()); // 输出MvcResult到控制台
+		String json = mockMvc.perform(get("/sample/up/{age}", 18)) // 执行请求
+				.andExpect(status().isOk())
+				.andDo(print())
+				.andReturn()
+				.getResponse()
+				.getContentAsString();
 	}
 
 
@@ -232,7 +231,7 @@ public class SampleControllerTest {
      * @throws SQLException
      */
     protected void verifyTableEmpty(String tableName) throws DataSetException, SQLException {
-        Assert.assertEquals(0, conn.createDataSet().getTable(tableName).getRowCount());
+        assertEquals(0, conn.createDataSet().getTable(tableName).getRowCount());
     }
 
     /**
@@ -244,7 +243,7 @@ public class SampleControllerTest {
      * @throws SQLException
      */
     protected void verifyTableNotEmpty(String tableName) throws DataSetException, SQLException {
-        Assert.assertNotEquals(0, conn.createDataSet().getTable(tableName).getRowCount());
+        assertNotEquals(0, conn.createDataSet().getTable(tableName).getRowCount());
     }
 
     /**

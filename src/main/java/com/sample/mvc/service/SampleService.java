@@ -16,8 +16,9 @@ public class SampleService {
 		SampleBean bean = sampleDao.queryById(id);
 		return bean;
 	}
-	public List<SampleBean> queryforPage(Integer pagesize, Integer pagenum) {
-		List<SampleBean> beans = sampleDao.queryTest(pagesize,pagenum);
+
+	public List<SampleBean> queryUpAge(int age) {
+		List<SampleBean> beans = sampleDao.queryTest(age);
 		return beans;
 	}
 

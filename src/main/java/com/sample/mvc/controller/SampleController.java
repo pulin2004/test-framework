@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.sample.mvc.bean.SampleBean;
@@ -33,9 +34,10 @@ public class SampleController {
 	        return mv;
 	    }
 	 
-	 	@RequestMapping("/{pagesize}/{pagenum}")
-		public List<SampleBean> views(@PathVariable("pagesize") Integer pagesize,@PathVariable("pagesize") Integer pagenum, HttpServletRequest req) {
-			 List<SampleBean> beans = sampleService.queryforPage( pagesize, pagenum);  
+	    @ResponseBody
+	 	@RequestMapping("/up/{age}")
+		public List<SampleBean> views(@PathVariable("age") Integer age, HttpServletRequest req) {
+			 List<SampleBean> beans = sampleService.queryUpAge( age);  
 		      return beans;
 		 }
 }
