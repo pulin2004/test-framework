@@ -2,6 +2,8 @@ package com.sample.mvc.controller;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
@@ -15,9 +17,12 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.databene.commons.Assert;
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseConnection;
 import org.dbunit.database.IDatabaseConnection;
@@ -32,7 +37,6 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +49,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.sample.mvc.bean.SampleBean;
+import com.test.framework.utils.JsonCompareUtils;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -93,6 +100,31 @@ public class SampleControllerTest {
 				.andReturn()
 				.getResponse()
 				.getContentAsString();
+		//验证测试结果
+		List<SampleBean> lst = new ArrayList<SampleBean>();
+		SampleBean bean = new SampleBean();
+		bean.setId(14L);
+		bean.setName("zhang4");
+		bean.setAddress("上海浦东东港");
+		bean.setPhone("1301238733841");
+		bean.setAge(19);
+		SampleBean bean1 = new SampleBean();
+		bean1.setId(15L);
+		bean1.setName("admin5");
+		bean1.setAddress("上海浦东");
+		bean1.setPhone("130123293840");
+		bean1.setAge(18);
+		SampleBean bean2 = new SampleBean();
+		bean2.setId(21L);
+		bean2.setName("zhang");
+		bean2.setAddress("上海浦东东港");
+		bean2.setPhone("1301238733841");
+		bean2.setAge(24);
+		lst.add(bean);
+		lst.add(bean2);
+		lst.add(bean1);
+		
+		Assert.isTrue(JsonCompareUtils.jsonObjectEquals(lst, json), "返回结果json对象与预期不一致");
 	}
 
 
