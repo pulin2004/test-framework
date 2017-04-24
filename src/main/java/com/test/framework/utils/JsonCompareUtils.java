@@ -42,7 +42,7 @@ public class JsonCompareUtils {
 	     * @param j2
 	     * @return
 	     */
-	    public static boolean jsonObjectEquals( Object obj,String j2){
+	    public static boolean jsonEquals( Object obj,String j2){
 	    	// 用户组对象转JSON串  
 	    	 String jsonString = JSON.toJSONString(obj);  
 	    	 return jsonEquals(jsonString,j2);
