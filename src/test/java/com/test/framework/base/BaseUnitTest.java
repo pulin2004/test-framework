@@ -21,7 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 })
 //@TestExecutionListeners({TransactionalTestExecutionListener.class})  
 @TestExecutionListeners({MockitoDependencyInjectionTestExecutionListener.class})
-public class BaseUnitTest {
+public abstract class BaseUnitTest {
     @Before
     public void setUp(){
 	    MockitoAnnotations.initMocks(this);
