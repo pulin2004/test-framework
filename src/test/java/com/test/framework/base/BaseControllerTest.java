@@ -51,7 +51,7 @@ public abstract class BaseControllerTest implements BaseDataTools{
 	private WebApplicationContext wac;
 	@Autowired
 	private DataSource dataSource;
-	public static final String ROOT_URL = System.getProperty("user.dir") + "/src/test/resources/test/framework/assembly/";
+//	public static final String ROOT_URL = System.getProperty("user.dir") + "/src/test/resources/test/framework/assembly/";
 	
 	
 	private BaseDataTools baseDataTools ;
@@ -63,7 +63,8 @@ public abstract class BaseControllerTest implements BaseDataTools{
     public void setUpBase() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {
         mockMvc = webAppContextSetup(wac).build();
         IDatabaseConnection  conn = new DatabaseConnection(DataSourceUtils.getConnection(dataSource));
-        baseDataTools = new BaseDataToolsImpl(conn,ROOT_URL);
+        String path = BaseProperty.ROOT_URL+BaseProperty.ASSEMBLY_URL+File.separator;
+        baseDataTools = new BaseDataToolsImpl(conn,path);
  
     }
 
