@@ -46,15 +46,14 @@ import org.springframework.web.context.WebApplicationContext;
 		@ContextConfiguration("classpath:mvc/spring-mvc.xml")
 
 })
-public abstract class BaseControllerTest implements BaseDataTools{
+public abstract class BaseControllerTest extends BaseDataTools{
 	@Autowired
 	private WebApplicationContext wac;
 	@Autowired
 	private DataSource dataSource;
 //	public static final String ROOT_URL = System.getProperty("user.dir") + "/src/test/resources/test/framework/assembly/";
 	
-	
-	private BaseDataTools baseDataTools ;
+
 	protected MockMvc mockMvc;
 	
 	
@@ -64,16 +63,14 @@ public abstract class BaseControllerTest implements BaseDataTools{
         mockMvc = webAppContextSetup(wac).build();
         IDatabaseConnection  conn = new DatabaseConnection(DataSourceUtils.getConnection(dataSource));
         String path = BaseProperty.ROOT_URL+BaseProperty.ASSEMBLY_URL+File.separator;
-        baseDataTools = new BaseDataToolsImpl(conn,path);
+        setConn(conn);
+        setRootUrl(path);
  
     }
 
     @After
     public void teardownBase() throws Exception {
-        if (baseDataTools != null) {
-        	baseDataTools.closeConnection();
-        }
-
+        closeConnection();
     }
 
 
@@ -82,99 +79,6 @@ public abstract class BaseControllerTest implements BaseDataTools{
 		return wac;
 	}
 
-	
-	@Override
-	public IDataSet getXmlDataSet(String name) throws DataSetException, IOException {
-		
-		return this.baseDataTools.getXmlDataSet(name);
-	}
 
-
-	@Override
-	public IDataSet getDBDataSet() throws SQLException {
-		
-		return this.baseDataTools.getDBDataSet();
-	}
-
-
-	@Override
-	public QueryDataSet getQueryDataSet() throws SQLException {
-		return this.baseDataTools.getQueryDataSet();
-	}
-
-
-	@Override
-	public XlsDataSet getXlsDataSet(String name) throws SQLException, DataSetException, IOException {
-		
-		return this.baseDataTools.getXlsDataSet(name);
-	}
-
-
-	@Override
-	public void backupAll() throws Exception {
-		this.baseDataTools.backupAll();
-		
-	}
-
-
-	@Override
-	public void backupCustom(String... tableName) throws Exception {
-		this.baseDataTools.backupCustom(tableName);
-		
-	}
-
-
-	@Override
-	public void rollback() throws Exception {
-		this.baseDataTools.rollback();
-		
-	}
-
-
-	@Override
-	public void clearTable(String tableName) throws Exception {
-		this.baseDataTools.clearTable(tableName);
-		
-	}
-
-
-	@Override
-	public void verifyTableEmpty(String tableName) throws DataSetException, SQLException {
-		this.baseDataTools.verifyTableEmpty(tableName);
-		
-	}
-
-
-	@Override
-	public void verifyTableNotEmpty(String tableName) throws DataSetException, SQLException {
-		this.verifyTableNotEmpty(tableName);
-		
-	}
-
-
-	@Override
-	public ReplacementDataSet createReplacementDataSet(IDataSet dataSet) {
-		return this.baseDataTools.createReplacementDataSet(dataSet);
-	}
-
-
-	@Override
-	public IDatabaseConnection getConn() {
-		return this.baseDataTools.getConn();
-	}
-
-
-	@Override
-	public void setConn(IDatabaseConnection conn) {
-		this.baseDataTools.setConn(conn);
-		
-	}
-
-
-	@Override
-	public void closeConnection() throws SQLException {
-		this.baseDataTools.closeConnection();
-		
-	}
     
 }

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <sample ID="11" NAME="admin1" ADDRESS="上海浦东" PHONE="130123293840" AGE="12"/>
+  <sample ID="12" NAME="zhang2" ADDRESS="上海浦东东港" PHONE="1301238733841" AGE="14"/>
+  <sample ID="13" NAME="admin3" ADDRESS="上海浦东" PHONE="130123293840" AGE="12"/>
+  <sample ID="14" NAME="zhang4" ADDRESS="上海浦东东港" PHONE="1301238733841" AGE="19"/>
+  <sample ID="15" NAME="admin5" ADDRESS="上海浦东" PHONE="130123293840" AGE="18"/>
+  <sample ID="21" NAME="zhang" ADDRESS="上海浦东东港" PHONE="1301238733841" AGE="24"/>
+  <address ID="13" ADDRESS="厦门东港1" CITY="厦门" REMARK="东方"/>
+  <address ID="14" ADDRESS="厦门东港2" CITY="厦门" REMARK="东方"/>
+  <address ID="15" ADDRESS="厦门东港3" CITY="福州" REMARK="东方"/>
+  <address ID="16" ADDRESS="厦门东港4" CITY="汕头" REMARK="东方"/>
+  <address ID="17" ADDRESS="厦门东港5" CITY="厦门" REMARK="东方"/>
+</dataset>

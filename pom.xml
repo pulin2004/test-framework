@@ -25,14 +25,11 @@
 		<servlet.version>3.0.1</servlet.version>
 		<spring.version>4.0.0.RELEASE</spring.version>
 		<aspectj.version>1.7.2</aspectj.version>
-
 		<asm.version>4.0</asm.version>
 		<cglib.version>3.0</cglib.version>
-
 		<jackson2.version>2.2.3</jackson2.version>
-
 		<jetty.version>8.1.8.v20121106</jetty.version>
-		<spring.boot.version>0.5.0.BUILD-SNAPSHOT</spring.boot.version>
+		<spring.boot.version>1.5.3.RELEASE</spring.boot.version>
 		<jsonpath.version>0.9.0</jsonpath.version>
 		<xstream.version>1.4.4</xstream.version>
 		<hsqldb.version>1.8.0.10</hsqldb.version>

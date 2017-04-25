@@ -30,7 +30,7 @@ import org.springframework.jdbc.CannotGetJdbcConnectionException;
 
 import com.sample.mvc.bean.SampleBean;
 import com.test.framework.base.BaseControllerTest;
-import com.test.framework.utils.JsonCompareUtils;
+import com.test.framework.base.JsonCompareUtils;
 
 public class SampleControllerTest extends BaseControllerTest {
 

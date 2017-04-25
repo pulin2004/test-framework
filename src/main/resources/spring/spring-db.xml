@@ -22,7 +22,7 @@
         <property name="maxOpenPreparedStatements" value="10" />  
     </bean>  
   
-    <jdbc:initialize-database data-source="dataSource">  
+    <jdbc:initialize-database data-source="dataSource" ignore-failures ="ALL">  
         <jdbc:script location="classpath:database/schema.sql" />  
     </jdbc:initialize-database>  
     

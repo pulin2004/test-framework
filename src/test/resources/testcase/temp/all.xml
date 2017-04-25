@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<dataset>
+  <ADDRESS ID="13" ADDRESS="厦门东港1" CITY="厦门" REMARK="东方"/>
+  <ADDRESS ID="14" ADDRESS="厦门东港2" CITY="厦门" REMARK="东方"/>
+  <ADDRESS ID="15" ADDRESS="厦门东港3" CITY="福州" REMARK="东方"/>
+  <ADDRESS ID="16" ADDRESS="厦门东港4" CITY="汕头" REMARK="东方"/>
+  <ADDRESS ID="17" ADDRESS="厦门东港5" CITY="厦门" REMARK="东方"/>
+  <REGIONS ID="151" ADDRESS="厦门东港3" CITY="福州" REMARK="东方十一万"/>
+  <REGIONS ID="162" ADDRESS="厦门东港4" CITY="汕头" REMARK="东方十一桶"/>
+  <REGIONS ID="171" ADDRESS="厦门东港5" CITY="厦门" REMARK="东方十一条"/>
+  <SAMPLE ID="11" NAME="admin1" ADDRESS="上海浦东" PHONE="130123293840" AGE="12"/>
+  <SAMPLE ID="12" NAME="zhang2" ADDRESS="上海浦东东港" PHONE="1301238733841" AGE="14"/>
+  <SAMPLE ID="13" NAME="admin3" ADDRESS="上海浦东" PHONE="130123293840" AGE="12"/>
+  <SAMPLE ID="14" NAME="zhang4" ADDRESS="上海浦东东港" PHONE="1301238733841" AGE="19"/>
+  <SAMPLE ID="15" NAME="admin5" ADDRESS="上海浦东" PHONE="130123293840" AGE="18"/>
+  <SAMPLE ID="21" NAME="zhang" ADDRESS="上海浦东东港" PHONE="1301238733841" AGE="24"/>
+</dataset>
