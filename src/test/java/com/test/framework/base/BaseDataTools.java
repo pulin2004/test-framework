@@ -3,13 +3,14 @@ package com.test.framework.base;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.database.QueryDataSet;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.excel.XlsDataSet;
 
-public interface BaseDatasource {
+public interface BaseDataTools {
 	 /**
      * 
      * @Title: getXmlDataSet
@@ -111,5 +112,21 @@ public interface BaseDatasource {
      * @return
      */
     ReplacementDataSet createReplacementDataSet(IDataSet dataSet);
+    /**
+     * 
+     * @Title: get Database Connection
+     * @return
+     */
+    IDatabaseConnection getConn() ;
+    /**
+     * @Title :set Database Connection
+     * @param conn
+     */
+    void setConn(IDatabaseConnection conn);
+    /**
+     * @throws SQLException 
+     * @Title: close Database Connection
+     */
+    void closeConnection() throws SQLException;
 
 }

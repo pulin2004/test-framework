@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-public class BaseDatasourceImpl implements BaseDatasource {
+public class BaseDataToolsImpl implements BaseDataTools {
 
 	private static IDatabaseConnection conn;
 	/**
@@ -34,13 +34,13 @@ public class BaseDatasourceImpl implements BaseDatasource {
 	 */
 	private String rootUrl;
 	/**
-	 * 数据库备份路径
+	 * 数据库备份目录路径
 	 */
 	private File tempFile;
 
-    public BaseDatasourceImpl(IDatabaseConnection conn, String rootUrl, String tempFile) {
+    public BaseDataToolsImpl(IDatabaseConnection conn, String rootUrl) {
 		this.conn = conn;
-		this.rootUrl = rootUrl;
+		this.rootUrl = rootUrl;	
 	}
 
 	/**
@@ -199,5 +199,24 @@ public class BaseDatasourceImpl implements BaseDatasource {
 
         return replacementDataSet;
     }
+
+	public  IDatabaseConnection getConn() {
+		return conn;
+	}
+
+	public  void setConn(IDatabaseConnection conn) {
+		BaseDataToolsImpl.conn = conn;
+	}
+
+	@Override
+	public void closeConnection() throws SQLException {
+		if(getConn() != null)
+		{
+			getConn().close();
+		}
+		
+	}
+    
+    
 
 }

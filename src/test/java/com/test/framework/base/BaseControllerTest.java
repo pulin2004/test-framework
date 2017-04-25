@@ -46,28 +46,31 @@ import org.springframework.web.context.WebApplicationContext;
 		@ContextConfiguration("classpath:mvc/spring-mvc.xml")
 
 })
-public abstract class BaseControllerTest implements BaseDatasource{
+public abstract class BaseControllerTest implements BaseDataTools{
 	@Autowired
 	private WebApplicationContext wac;
 	@Autowired
 	private DataSource dataSource;
 	public static final String ROOT_URL = System.getProperty("user.dir") + "/src/test/resources/test/framework/assembly/";
-
+	
+	
+	private BaseDataTools baseDataTools ;
 	protected MockMvc mockMvc;
-	//C:\eclipse\workspace\test.framework\src\test\resources\test\framework\assembly
+	
 	
 	
     @Before
     public void setUpBase() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {
         mockMvc = webAppContextSetup(wac).build();
-        conn = new DatabaseConnection(DataSourceUtils.getConnection(dataSource));
+        IDatabaseConnection  conn = new DatabaseConnection(DataSourceUtils.getConnection(dataSource));
+        baseDataTools = new BaseDataToolsImpl(conn,ROOT_URL);
  
     }
 
     @After
     public void teardownBase() throws Exception {
-        if (conn != null) {
-            conn.close();
+        if (baseDataTools != null) {
+        	baseDataTools.closeConnection();
         }
 
     }
@@ -78,9 +81,99 @@ public abstract class BaseControllerTest implements BaseDatasource{
 		return wac;
 	}
 
-	protected static IDatabaseConnection getConn() {
-		return conn;
+	
+	@Override
+	public IDataSet getXmlDataSet(String name) throws DataSetException, IOException {
+		
+		return this.baseDataTools.getXmlDataSet(name);
 	}
-    
+
+
+	@Override
+	public IDataSet getDBDataSet() throws SQLException {
+		
+		return this.baseDataTools.getDBDataSet();
+	}
+
+
+	@Override
+	public QueryDataSet getQueryDataSet() throws SQLException {
+		return this.baseDataTools.getQueryDataSet();
+	}
+
+
+	@Override
+	public XlsDataSet getXlsDataSet(String name) throws SQLException, DataSetException, IOException {
+		
+		return this.baseDataTools.getXlsDataSet(name);
+	}
+
+
+	@Override
+	public void backupAll() throws Exception {
+		this.baseDataTools.backupAll();
+		
+	}
+
+
+	@Override
+	public void backupCustom(String... tableName) throws Exception {
+		this.baseDataTools.backupCustom(tableName);
+		
+	}
+
+
+	@Override
+	public void rollback() throws Exception {
+		this.baseDataTools.rollback();
+		
+	}
+
+
+	@Override
+	public void clearTable(String tableName) throws Exception {
+		this.baseDataTools.clearTable(tableName);
+		
+	}
+
+
+	@Override
+	public void verifyTableEmpty(String tableName) throws DataSetException, SQLException {
+		this.baseDataTools.verifyTableEmpty(tableName);
+		
+	}
+
+
+	@Override
+	public void verifyTableNotEmpty(String tableName) throws DataSetException, SQLException {
+		this.verifyTableNotEmpty(tableName);
+		
+	}
+
+
+	@Override
+	public ReplacementDataSet createReplacementDataSet(IDataSet dataSet) {
+		return this.baseDataTools.createReplacementDataSet(dataSet);
+	}
+
+
+	@Override
+	public IDatabaseConnection getConn() {
+		return this.baseDataTools.getConn();
+	}
+
+
+	@Override
+	public void setConn(IDatabaseConnection conn) {
+		this.baseDataTools.setConn(conn);
+		
+	}
+
+
+	@Override
+	public void closeConnection() throws SQLException {
+		this.baseDataTools.closeConnection();
+		
+	}
     
 }
