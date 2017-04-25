@@ -27,23 +27,18 @@ import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration(value = "test.framwork/src/main/webapp")
-//@TransactionConfiguration(transactionManager = "transactionManager",defaultRollback = false) 
-//@Transactional
 @ContextHierarchy({ 
 		@ContextConfiguration("classpath:spring/spring-db.xml"),
 		@ContextConfiguration("classpath:spring/spring-config.xml"),
 		@ContextConfiguration("classpath:mvc/spring-mvc.xml")
 
 })
-//@TestExecutionListeners({TransactionalTestExecutionListener.class})  
-@TestExecutionListeners({MockitoDependencyInjectionTestExecutionListener.class})
-public abstract class BaseControllerTest extends BaseDataTools{
+public abstract class BaseAssembleTest extends BaseDataTools{
 	@Autowired
 	private WebApplicationContext wac;
 	@Autowired
 	private DataSource dataSource;
-//	public static final String ROOT_URL = System.getProperty("user.dir") + "/src/test/resources/test/framework/assembly/";
-	
+
 
 	protected MockMvc mockMvc;
 	

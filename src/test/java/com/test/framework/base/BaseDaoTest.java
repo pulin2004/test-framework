@@ -1,7 +1,5 @@
 package com.test.framework.base;
 
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,7 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 		@ContextConfiguration("classpath:spring/spring-db.xml"),
 		@ContextConfiguration("classpath:springtest/spring-dao.xml")
 })
-public class BaseDaoTest extends BaseDataTools{
+public abstract class BaseDaoTest extends BaseDataTools{
 	@Autowired
 	private DataSource dataSource;
 

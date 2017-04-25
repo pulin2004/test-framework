@@ -20,121 +20,127 @@ import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 public class MockitoDependencyInjectionTestExecutionListener extends DependencyInjectionTestExecutionListener {
-    private static final Map<String, MockObject> mockObject   = new HashMap<String, MockObject>();
-    private static final List<Field>             injectFields = new ArrayList<Field>();
-    @Override
-    protected void injectDependencies(final TestContext testContext) throws Exception {
+
+	private static final Map<String, MockObject> mockObject = new HashMap<String, MockObject>();
+	private static final List<Field> injectFields = new ArrayList<Field>();
+
+	@Override
+	protected void injectDependencies(final TestContext testContext) throws Exception {
+		// 防止多个单元测试打包测试的时候相互干扰
+		mockObject.clear();
+		injectFields.clear();
 		super.injectDependencies(testContext);
-        init(testContext);
-    }
-    protected void injectMock(final TestContext testContext) throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
-        AutowireCapableBeanFactory beanFactory = testContext.getApplicationContext().getAutowireCapableBeanFactory();
-        for (Field field : injectFields) {
-            Object o = beanFactory.getBean(field.getName(), field.getType());
-            if (null != o) {
-                Method[] methods = o.getClass().getDeclaredMethods();
-                for (Method method : methods) {
-                    if (method.getName().startsWith("set")) {
-                        for (Iterator it = mockObject.keySet().iterator(); it.hasNext();) {
-                            String key = (String) it.next();
-                            if (method.getName().equalsIgnoreCase("set" + key)) {
-                                method.invoke(o, mockObject.get(key).getObj());
-                                break;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+		init(testContext);
+	}
 
-    private void init(final TestContext testContext) throws Exception {
-        Object bean = testContext.getTestInstance();
-        Field[] fields = bean.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            Annotation[] annotations = field.getAnnotations();
-            for (Annotation antt : annotations) {
-                if (antt instanceof org.mockito.Mock) {
-                    // 注入mock实例
-                    MockObject obj = new MockObject();
-                    obj.setType(field.getType());
-                    obj.setObj(Mockito.mock(field.getType()));
-                    field.setAccessible(true);
-                    field.set(bean, obj.getObj());
-                    mockObject.put(field.getName(), obj);
-                } else if (antt instanceof Autowired) {
-                    // 只对autowire重新注入
-                    injectFields.add(field);
-                }
-            }
-        }
-        for (Field field : injectFields) {
-            field.setAccessible(true);
-            Object object = field.get(bean);
-            if (object instanceof Proxy) {
-                // 如果是代理的话，找到真正的对象
-                Class targetClass = AopUtils.getTargetClass(object);
-                if (targetClass == null) {
-                    // 可能是远程实现
-                    return;
-                }
-                Field[] targetFields = targetClass.getDeclaredFields();
-                for (int i = 0; i < targetFields.length; i++) {
-                    // 针对每个需要重新注入的字段
-                    for (Map.Entry<String, MockObject> entry : mockObject.entrySet()) {
-                        // 针对每个mock的字段
-                        if (targetFields[i].getName().equals(entry.getKey())) {
-                            targetFields[i].setAccessible(true);
-                            targetFields[i].set(getTargetObject(object, entry.getValue().getType()),
-                                                entry.getValue().getObj());
-                        }
-                    }
-                }
-            } else {
-                injectMock(testContext);
-            }
-        }
-    }
+	protected void injectMock(final TestContext testContext)
+			throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+		AutowireCapableBeanFactory beanFactory = testContext.getApplicationContext().getAutowireCapableBeanFactory();
+		for (Field field : injectFields) {
+			Object o = beanFactory.getBean(field.getName(), field.getType());
+			if (null != o) {
+				Method[] methods = o.getClass().getDeclaredMethods();
+				for (Method method : methods) {
+					if (method.getName().startsWith("set")) {
+						for (Iterator it = mockObject.keySet().iterator(); it.hasNext();) {
+							String key = (String) it.next();
+							if (method.getName().equalsIgnoreCase("set" + key)) {
+								method.invoke(o, mockObject.get(key).getObj());
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 
-    protected <T> T getTargetObject(Object proxy, Class<T> targetClass) throws Exception {
-        if (AopUtils.isJdkDynamicProxy(proxy)) {
-            return (T) ((Advised) proxy).getTargetSource().getTarget();
-        } else {
-            return (T) proxy; // expected to be cglib proxy then, which is simply a specialized class
-        }
-    }
+	private void init(final TestContext testContext) throws Exception {
+		Object bean = testContext.getTestInstance();
+		Field[] fields = bean.getClass().getDeclaredFields();
+		for (Field field : fields) {
+			Annotation[] annotations = field.getAnnotations();
+			for (Annotation antt : annotations) {
+				if (antt instanceof org.mockito.Mock) {
+					// 注入mock实例
+					MockObject obj = new MockObject();
+					obj.setType(field.getType());
+					obj.setObj(Mockito.mock(field.getType()));
+					field.setAccessible(true);
+					field.set(bean, obj.getObj());
+					mockObject.put(field.getName(), obj);
+				} else if (antt instanceof Autowired) {
+					// 只对autowire重新注入
+					injectFields.add(field);
+				}
+			}
+		}
+		for (Field field : injectFields) {
+			field.setAccessible(true);
+			Object object = field.get(bean);
+			if (object instanceof Proxy) {
+				// 如果是代理的话，找到真正的对象
+				Class targetClass = AopUtils.getTargetClass(object);
+				if (targetClass == null) {
+					// 可能是远程实现
+					return;
+				}
+				Field[] targetFields = targetClass.getDeclaredFields();
+				for (int i = 0; i < targetFields.length; i++) {
+					// 针对每个需要重新注入的字段
+					for (Map.Entry<String, MockObject> entry : mockObject.entrySet()) {
+						// 针对每个mock的字段
+						if (targetFields[i].getName().equals(entry.getKey())) {
+							targetFields[i].setAccessible(true);
+							targetFields[i].set(getTargetObject(object, entry.getValue().getType()),
+									entry.getValue().getObj());
+						}
+					}
+				}
+			} else {
+				injectMock(testContext);
+			}
+		}
+	}
 
-    public static class MockObject {
-        private Object   obj;
-        private Class<?> type;
+	protected <T> T getTargetObject(Object proxy, Class<T> targetClass) throws Exception {
+		if (AopUtils.isJdkDynamicProxy(proxy)) {
+			return (T) ((Advised) proxy).getTargetSource().getTarget();
+		} else {
+			return (T) proxy; // expected to be cglib proxy then, which is
+								// simply a specialized class
+		}
+	}
 
-        public MockObject(){
-        }
+	public static class MockObject {
+		private Object obj;
+		private Class<?> type;
 
-        public Object getObj() {
-            return obj;
-        }
+		public MockObject() {
+		}
 
-        public void setObj(Object obj) {
-            this.obj = obj;
-        }
+		public Object getObj() {
+			return obj;
+		}
 
-        public Class<?> getType() {
-            return type;
-        }
+		public void setObj(Object obj) {
+			this.obj = obj;
+		}
 
-        public void setType(Class<?> type) {
-            this.type = type;
-        }
-    }
+		public Class<?> getType() {
+			return type;
+		}
 
-    public static Map<String, MockObject> getMockobject() {
-        return mockObject;
-    }
+		public void setType(Class<?> type) {
+			this.type = type;
+		}
+	}
 
-    public static List<Field> getInjectfields() {
-        return injectFields;
-    }
+	public static Map<String, MockObject> getMockobject() {
+		return mockObject;
+	}
+
+	public static List<Field> getInjectfields() {
+		return injectFields;
+	}
 }
-
-

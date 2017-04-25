@@ -9,7 +9,7 @@ import com.sample.mvc.bean.SampleBean;
 import com.sample.mvc.dao.SampleDao;
 
 @Service
-public class SampleService {
+public class SampleService{
 	@Autowired
 	private SampleDao sampleDao;
 	
