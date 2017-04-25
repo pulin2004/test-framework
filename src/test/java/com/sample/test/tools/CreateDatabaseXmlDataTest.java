@@ -1,4 +1,4 @@
-package com.sample.mvc.controller;
+package com.sample.test.tools;
 
 import java.io.File;
 import java.io.IOException;

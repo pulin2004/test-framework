@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<dataset>
-  <address ID="13" ADDRESS="厦门东港1" CITY="厦门" REMARK="东方"/>
-  <address ID="14" ADDRESS="厦门东港2" CITY="厦门" REMARK="东方"/>
-  <address ID="17" ADDRESS="厦门东港5" CITY="厦门" REMARK="东方"/>
-  <sample ID="14" NAME="zhang4" ADDRESS="上海浦东东港" PHONE="1301238733841" AGE="19"/>
-  <sample ID="21" NAME="zhang" ADDRESS="上海浦东东港" PHONE="1301238733841" AGE="24"/>
-</dataset>
