@@ -12,6 +12,7 @@ import com.sample.mvc.dao.SampleDao;
 public class SampleService {
 	@Autowired
 	private SampleDao sampleDao;
+	
 	public SampleBean findById(Long id) {
 		SampleBean bean = sampleDao.queryById(id);
 		return bean;
