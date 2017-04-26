@@ -39,7 +39,75 @@
 <P>应用系统分层已经是项目架构方面的共识，针对不同职责将程序分为不同层次，每层只完成特定的任务，即简化应用系统复杂度，又提高应用系统的可维护性。同样，测试也应该针对不同层次采用分层测试，每一层测试用例和测试方法都和应用系统分层对应，让测试用例职责单一化，降低测试用例复杂度和可维护性。</P>
 <ul>
 <h2>集成测试</h2>
-<P>集成测试是测试微服务对外提供的服务，属于功能测试和黑盒测试。集成测试要求微服务是完整状态，包括代码、配置、数据库等。集成测试流程如下：
+<P>集成测试是测试微服务对外提供的服务，属于功能测试和黑盒测试。集成测试要求微服务是完整状态，包括代码、配置、数据库等。集成测试用例继承BaseAssembleTest基类。在setup方法中将数据库数据环境，保证测试可重复。例如：
+<pre>
+/**
+ * 集成测试样例
+ * @author lin.pu
+ *
+ */
+public class SampleControllerTest extends BaseAssembleTest {
+
+	@Before
+	public void setUp() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {
+
+		// 加载数据库文本数据
+		IDataSet dataSet = getXmlDataSet("sample/init/init_db.xml");
+		// 将数据加载到数据库中，采用clean_insert模式（具体模式见dbunit）
+		DatabaseOperation.CLEAN_INSERT.execute(getConn(), dataSet);
+	}
+
+	@Test
+	public void testview() throws Exception {
+		// 测试普通控制器
+		mockMvc.perform(get("/sample/{id}", 21)) // 执行请求
+				.andExpect(model().attributeExists("bean")) // 验证存储模型数据
+				.andExpect(model().attribute("bean", hasProperty("name", equalTo("zhang")))) // 验证存储模型数据
+				.andExpect(view().name("user/view")) // 验证viewName
+				.andExpect(forwardedUrl("/WEB-INF/jsp/user/view.jsp"))// 验证视图渲染时forward到的jsp
+				.andExpect(status().isOk())// 验证状态码
+				.andDo(print()); // 输出MvcResult到控制台
+	}
+
+	@Test
+	public void testviews() throws Exception {
+		// 测试普通控制器
+		String json = mockMvc.perform(get("/sample/up/{age}", 18)) // 执行请求
+				.andExpect(status().isOk())// 验证状态码
+				.andDo(print())// 输出MvcResult到控制台
+				.andReturn()// 输出返回json对象
+				.getResponse().getContentAsString();
+		// 验证测试结果
+		List<SampleBean> lst = new ArrayList<SampleBean>();
+		SampleBean bean = new SampleBean();
+		bean.setId(14L);
+		bean.setName("zhang4");
+		bean.setAddress("上海浦东东港");
+		bean.setPhone("1301238733841");
+		bean.setAge(19);
+		SampleBean bean1 = new SampleBean();
+		bean1.setId(15L);
+		bean1.setName("admin5");
+		bean1.setAddress("上海浦东");
+		bean1.setPhone("130123293840");
+		bean1.setAge(18);
+		SampleBean bean2 = new SampleBean();
+		bean2.setId(21L);
+		bean2.setName("zhang");
+		bean2.setAddress("上海浦东东港");
+		bean2.setPhone("1301238733841");
+		bean2.setAge(24);
+		lst.add(bean);
+		lst.add(bean2);
+		lst.add(bean1);
+		Assert.isTrue(JsonCompareUtils.jsonEquals(lst, json), "返回结果json对象与预期不一致");
+	}
+
+}
+</pre>
+<p>数据文件样例：</P>
+
+<img> </img>
 <P>测试框架配置</P>
 <P>cotroller测试</P>
 <P>dao层测试</P>
