@@ -234,6 +234,7 @@ public class CreateDatabaseXmlDataTest extends CreateDatasetXml{
 
 }
 </pre>
-
+<h2>json对象比较</h2>
+<P>框架提供对json对象的比较，你可以比较复杂json对象是否相等，也可以比较具体对象与json对象是否一致。具体见<a href="https://github.com/pulin2004/test-framework/blob/master/src/test/java/com/test/framework/base/JsonCompareUtils.java">JsonCompareUtils.java</a></P>
 </ul>
   

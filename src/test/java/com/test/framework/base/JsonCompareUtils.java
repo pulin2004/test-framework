@@ -4,6 +4,11 @@ import java.util.regex.Pattern;
 
 import com.alibaba.fastjson.JSON;
 
+/**
+ * json对象比较
+ * @author lin.pu
+ *
+ */
 public class JsonCompareUtils {
 
 	   /**

@@ -25,6 +25,11 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+/**
+ * 集成测试基类
+ * @author lin.pu
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration(value = "test.framwork/src/main/webapp")
 @ContextHierarchy({ 
@@ -48,7 +53,7 @@ public abstract class BaseAssembleTest extends BaseDataTools{
     public void setUpBase() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {
         mockMvc = webAppContextSetup(wac).build();
         IDatabaseConnection  conn = new DatabaseConnection(DataSourceUtils.getConnection(dataSource));
-        String path = BaseProperty.ROOT_URL+BaseProperty.ASSEMBLY_URL+File.separator;
+        String path = BaseProperty.ASSEMBLY_URL;
         setConn(conn);
         setRootUrl(path);
  

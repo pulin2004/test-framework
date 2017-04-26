@@ -24,6 +24,11 @@ import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 
+/**
+ * 数据库操作工具类
+ * @author lin.pu
+ *
+ */
 public class BaseDataTools {
 
 	private static IDatabaseConnection conn;
@@ -38,9 +43,8 @@ public class BaseDataTools {
 
     
 
-	/**
-     * 
-     * @Title: getXmlDataSet
+
+    /**
      * @param name
      * @return
      * @throws DataSetException
@@ -52,10 +56,8 @@ public class BaseDataTools {
         return builder.build(new FileInputStream(new File(rootUrl + name)));
     }
 
+
     /**
-     * Get DB DataSet
-     * 
-     * @Title: getDBDataSet
      * @return
      * @throws SQLException
      */
@@ -63,10 +65,8 @@ public class BaseDataTools {
         return conn.createDataSet();
     }
 
+
     /**
-     * Get Query DataSet
-     * 
-     * @Title: getQueryDataSet
      * @return
      * @throws SQLException
      */
@@ -74,10 +74,8 @@ public class BaseDataTools {
         return new QueryDataSet(conn);
     }
 
+
     /**
-     * Get Excel DataSet
-     * 
-     * @Title: getXlsDataSet
      * @param name
      * @return
      * @throws SQLException
@@ -91,10 +89,9 @@ public class BaseDataTools {
         return new XlsDataSet(is);
     }
 
+
     /**
-     * backup the whole DB
-     * 
-     * @Title: backupAll
+     * 备份整个数据库
      * @throws Exception
      */
     public void backupAll() throws Exception {
@@ -108,10 +105,9 @@ public class BaseDataTools {
         FlatXmlDataSet.write(ds, new FileWriter(tempFile), "UTF-8");
     }
 
+
     /**
-     * back specified DB table
-     * 
-     * @Title: backupCustom
+     * 备份指定数据库表的数据
      * @param tableName
      * @throws Exception
      */
@@ -127,10 +123,9 @@ public class BaseDataTools {
 
     }
 
+
     /**
-     * rollback database
-     * 
-     * @Title: rollback
+     * 回滚
      * @throws Exception
      */
     public void rollback() throws Exception {
@@ -145,9 +140,9 @@ public class BaseDataTools {
     }
 
 
+
     /**
-     * Clear data of table
-     * 
+     * 清空数据库表
      * @param tableName
      * @throws Exception
      */
@@ -157,9 +152,9 @@ public class BaseDataTools {
         DatabaseOperation.DELETE_ALL.execute(conn, dataset);
     }
 
+
     /**
-     * verify Table is Empty
-     * 
+     * 验证数据库表是空
      * @param tableName
      * @throws DataSetException
      * @throws SQLException
@@ -169,9 +164,7 @@ public class BaseDataTools {
     }
 
     /**
-     * verify Table is not Empty
-     * 
-     * @Title: verifyTableNotEmpty
+     * 验证数据库表不为空
      * @param tableName
      * @throws DataSetException
      * @throws SQLException
@@ -180,30 +173,40 @@ public class BaseDataTools {
         assertNotEquals(0, conn.createDataSet().getTable(tableName).getRowCount());
     }
 
-    /**
-     * 
-     * @Title: createReplacementDataSet
-     * @param dataSet
-     * @return
-     */
-    public ReplacementDataSet createReplacementDataSet(IDataSet dataSet) {
-        ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
 
-        // Configure the replacement dataset to replace '[NULL]' strings with null.
-        replacementDataSet.addReplacementObject("[null]", null);
+//    /**
+//     * 创建替换的dataSet
+//     * @param dataSet
+//     * @return
+//     */
+//    public ReplacementDataSet createReplacementDataSet(IDataSet dataSet) {
+//        ReplacementDataSet replacementDataSet = new ReplacementDataSet(dataSet);
+//
+//        // Configure the replacement dataset to replace '[NULL]' strings with null.
+//        replacementDataSet.addReplacementObject("[null]", null);
+//
+//        return replacementDataSet;
+//    }
 
-        return replacementDataSet;
-    }
-
+	/**
+	 * @return
+	 */
 	public  IDatabaseConnection getConn() {
 		return conn;
 	}
 
+	/**
+	 * @param conn
+	 */
 	public  void setConn(IDatabaseConnection conn) {
 		BaseDataTools.conn = conn;
 	}
 
 
+	/**
+	 * 关闭连接
+	 * @throws SQLException
+	 */
 	public void closeConnection() throws SQLException {
 		if(getConn() != null)
 		{
@@ -213,14 +216,28 @@ public class BaseDataTools {
 	}
 	
 	
+	/**
+	 * @return
+	 */
 	public String getRootUrl() {
 		return rootUrl;
 	}
 
+	/**
+	 * @param rootUrl
+	 */
 	public void setRootUrl(String rootUrl) {
 		this.rootUrl = rootUrl;
 	}
 
+	/**
+	 * 断言数据库表数据和预期一致
+	 * @param xmlPath 预期数据文件路径
+	 * @param tableName 表名
+	 * @throws IOException
+	 * @throws SQLException
+	 * @throws DatabaseUnitException
+	 */
 	public void assertDBEquals(String xmlPath ,String tableName) throws IOException, SQLException, DatabaseUnitException
 	{
 		IDataSet dataSet = getXmlDataSet(xmlPath);
@@ -229,6 +246,15 @@ public class BaseDataTools {
 		Assertion.assertEquals(expectSet, acutualSet);
 	}
 	
+	/**
+	 * 断言数据库表数据和预期一致，忽略指定栏目（更新时间、创建时间等）
+	 * @param xmlPath 预期数据文件路径
+	 * @param tableName 表名
+	 * @param columns 忽略指定栏目
+	 * @throws IOException
+	 * @throws SQLException
+	 * @throws DatabaseUnitException
+	 */
 	public void assertDBEqualsIgnoreCols(String xmlPath ,String tableName,String... columns) throws IOException, SQLException, DatabaseUnitException
 	{
 		IDataSet dataSet = getXmlDataSet(xmlPath);
@@ -236,6 +262,15 @@ public class BaseDataTools {
 		ITable acutualSet = getConn().createTable(tableName);
 		Assertion.assertEqualsIgnoreCols(expectSet, acutualSet,columns);
 	}
+	/**
+	 * 断言数据库查询出的数据集合和预期一致
+	 * @param xmlPath 预期数据文件路径
+	 * @param tableName 查询表名
+	 * @param sql 查询的sql语句
+	 * @throws IOException
+	 * @throws SQLException
+	 * @throws DatabaseUnitException
+	 */
 	public void assertQueryEquals(String xmlPath ,String tableName,String sql) throws IOException, SQLException, DatabaseUnitException
 	{
 		IDataSet dataSet = getXmlDataSet(xmlPath);
@@ -244,6 +279,16 @@ public class BaseDataTools {
 		Assertion.assertEquals(expectSet, acutualSet);
 	}
 	
+	/**
+	 * 断言数据库查询出的数据集合和预期一致,忽略指定字段
+	 * @param xmlPath 预期数据文件路径
+	 * @param tableName 查询表名
+	 * @param sql  查询的sql语句
+	 * @param columns 忽略指定字段
+	 * @throws IOException
+	 * @throws SQLException
+	 * @throws DatabaseUnitException
+	 */
 	public void assertQueryEqualsIgnoreCols(String xmlPath ,String tableName,String sql,String... columns) throws IOException, SQLException, DatabaseUnitException
 	{
 		IDataSet dataSet = getXmlDataSet(xmlPath);

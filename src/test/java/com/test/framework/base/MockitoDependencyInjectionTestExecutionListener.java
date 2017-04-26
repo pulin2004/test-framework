@@ -19,6 +19,11 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
+/**
+ * mock注入监听
+ * @author lin.pu
+ *
+ */
 public class MockitoDependencyInjectionTestExecutionListener extends DependencyInjectionTestExecutionListener {
 
 	private static final Map<String, MockObject> mockObject = new HashMap<String, MockObject>();

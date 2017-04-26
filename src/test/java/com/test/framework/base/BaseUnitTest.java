@@ -8,6 +8,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.TestExecutionListeners;
 
+/**
+ * service层测试基类
+ * @author lin.pu
+ *
+ */
 @RunWith(Feeder.class)
 @ContextHierarchy({ 
 	    @ContextConfiguration("classpath:spring/spring-db.xml"),

@@ -19,6 +19,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+/**
+ * dao层测试基类
+ * @author lin.pu
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextHierarchy({ 
 		@ContextConfiguration("classpath:spring/spring-db.xml"),
@@ -31,7 +36,7 @@ public abstract class BaseDaoTest extends BaseDataTools{
     @Before
     public void setUpBase() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {
         IDatabaseConnection  conn = new DatabaseConnection(DataSourceUtils.getConnection(dataSource));
-        String path = BaseProperty.ROOT_URL+BaseProperty.DAO_URL+File.separator;
+        String path = BaseProperty.DAO_URL;
         setConn(conn);
         setRootUrl(path);
  
