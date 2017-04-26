@@ -105,9 +105,8 @@ public class SampleControllerTest extends BaseAssembleTest {
 
 }
 </pre>
-<p>数据文件样例：</P>
+<p>数据文件样例：<a href="https://github.com/pulin2004/test-framework/blob/master/src/test/resources/testcase/assembly/sample/init/init_db.xml">init_db.xml</a></P>
 
-<img> </img>
 <P>测试框架配置</P>
 <P>cotroller测试</P>
 <P>dao层测试</P>
