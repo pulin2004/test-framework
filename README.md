@@ -106,7 +106,8 @@ public class SampleControllerTest extends BaseAssembleTest {
 </pre>
 <p>数据文件样例：<a href="https://github.com/pulin2004/test-framework/blob/master/src/test/resources/testcase/assembly/sample/init/init_db.xml">init_db.xml</a></P>
 <h2>service层测试</h2>
-<p>service层测试属于单元测试，是针对各个方
+<p>service层测试属于单元测试，是针对service层各类的方法进行测试。service层测试主要采用mock进行调用模拟，因此service层测试用例流程如下：
+![service层测试流程](https://github.com/pulin2004/test-framework/blob/master/doc/2017-04-26_12-51-56.png)
 <P>测试框架配置</P>
 <P>cotroller测试</P>
 <P>dao层测试</P>
