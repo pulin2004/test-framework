@@ -106,8 +106,62 @@ public class SampleControllerTest extends BaseAssembleTest {
 </pre>
 <p>数据文件样例：<a href="https://github.com/pulin2004/test-framework/blob/master/src/test/resources/testcase/assembly/sample/init/init_db.xml">init_db.xml</a></P>
 <h2>service层测试</h2>
-<p>service层测试属于单元测试，是针对service层各类的方法进行测试。service层测试主要采用mock进行调用模拟，因此service层测试用例流程如下：
-![service层测试流程](https://github.com/pulin2004/test-framework/blob/master/doc/2017-04-26_12-51-56.png)
+<p>service层测试属于单元测试，是针对service层各类的方法进行测试。service层测试主要采用mock进行调用模拟。Service层测试用例继承BaseUnitTest基类。测试样例：</p>
+<pre>
+/**
+ * service层测试用例样例
+ * 
+ * @author lin.pu
+ *
+ */
+public class SampleServiceTest extends BaseUnitTest {
+
+	/**
+	 * 被测试的service对象
+	 */
+	@InjectMocks
+	private SampleService sampleService;
+	/**
+	 * service对象引用的dao对象，用mock替代
+	 */
+	@Mock
+	private SampleDao sampleDao;
+
+	@Test
+	public void testQueryById() {
+		// 第一步，对mock对象的行为进行模拟
+		SampleBean bean = new SampleBean();
+		Long id = 99928L;
+		// 先设置预期
+		when(sampleDao.queryById(id)).thenReturn(bean);
+		// 第二步，调用测试方法
+		SampleBean act = sampleService.findById(id);
+		// 第三步，断言
+		Assert.assertEquals(bean, act);
+
+	}
+</pre>
+<p>另外service层测试还提供批量测试功能，允许把测试参数和断言写在CSV和XLS文件中，批量进行验证，例如：</P>
+<pre>
+/**
+ * 批量参数测试样例
+ * 
+ * @author lin.pu
+ *
+ */
+public class SwitchUtilsTest extends BaseUnitTest {
+
+	@Test // Specify the method as a test method
+	@Source("/testcase/switch.xls") // 参数文件
+	public void testSwitchSample(int i, int b, int expect) {
+		Assert.assertEquals(expect, SwitchUtils.SwitchSample(i, b));
+	}
+
+}
+</pre>
+<p>数据文件样例：<a href="https://github.com/pulin2004/test-framework/blob/master/src/test/resources/testcase/switch.xls">switch.xls</a></P>
+<img style="max-width:100%;" alt="测试结果" src="https://camo.githubusercontent.com/c85458203c14b7fb5973788abeef08f52d74c9fe/68747470733a2f2f7261772e6769746875622e636f6d2f6e69636f6c61732d72616f756c2f436f6d6d6f6e732d444243502d6d6f6e69746f72696e672f6d61737465722f73637265656e73686f74732f746872656164732d7573696e672d636f6e6e656374696f6e732e706e67" data-canonical-src="https://raw.github.com/nicolas-raoul/Commons-DBCP-monitoring/master/screenshots/threads-using-connections.png">
+<h2>dao层测试</h2>
 <P>测试框架配置</P>
 <P>cotroller测试</P>
 <P>dao层测试</P>
