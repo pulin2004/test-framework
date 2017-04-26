@@ -160,7 +160,6 @@ public class SwitchUtilsTest extends BaseUnitTest {
 }
 </pre>
 <p>数据文件样例：<a href="https://github.com/pulin2004/test-framework/blob/master/src/test/resources/testcase/switch.xls">switch.xls</a></P>
-<img alt="20170426153002.png" src="/pulin2004/test-framework/blob/master/doc/pic/20170426153002.png?raw=true">
 <h2>dao层测试</h2>
 <p>dao层是数据访问层，对该层测试采用连着数据库一起测试，因此dao层测试必须解决数据库环境和数据库数据断言验证。dao层测试用例继承BaseDaoTest基类。测试样例：</p>
 <pre>
@@ -200,11 +199,41 @@ public class SampleDaoTest extends BaseDaoTest{
 	  }
 </pre>
 </ul>
-<P>测试框架配置</P>
-<P>cotroller测试</P>
-<P>dao层测试</P>
-<P>service层测试</P>
-<br/>
-<P>基于测试项目管理</P>
-test-framework / doc / 2017-04-26_12-52-30.png 
+<h1>工具类</h1>
+<P>为提高测试用例的编制效率，框架提供的一些常用工具。</P>
+<ul>
+<h2>数据库数据转换为文件</h2>
+<p>框架提供将数据库中的数据转为为xml文件功能，首先配置数据库参数：com.test.framework.base.CreateDatasetXml的@ContextHierarchy标签，将数据库配置文件加载。然后继承该类，调用相应方法进行测试，样例：</P>
+<pre>
+/**
+ * 将数据库数据转换为xml文件
+ * @author lin.pu
+ *
+ */
+public class CreateDatabaseXmlDataTest extends CreateDatasetXml{
+    @Before
+    public void init_DB() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {
+
+    	//加载数据库文本数据
+        IDataSet dataSet = getXmlDataSet("assembly/sample/init/init_db2.xml");
+        //将数据加载到数据库中
+        DatabaseOperation.CLEAN_INSERT.execute(getConn(),dataSet); 
+    }
+    
+    @Test
+    public void testCreateXml() throws Exception
+    {
+    	backupAll(BaseProperty.ROOT_URL+"temp"+File.separator+"all.xml");
+    	backupCustom(BaseProperty.ROOT_URL+"temp"+File.separator+"custom.xml","sample","address");
+    	QueryBean bean = new QueryBean();
+    	bean.addQuery("sample", "select * from sample where age >18");
+    	bean.addQuery("address", "select * from address where city = '厦门'");
+    	backupQuery(BaseProperty.ROOT_URL+"temp"+File.separator+"query.xml",bean);
+    }
+
+
+}
+</pre>
+
+</ul>
   

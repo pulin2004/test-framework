@@ -15,6 +15,11 @@ import com.test.framework.base.BaseProperty;
 import com.test.framework.base.CreateDatasetXml;
 import com.test.framework.base.QueryBean;
 
+/**
+ * 将数据库数据转换为xml文件
+ * @author lin.pu
+ *
+ */
 public class CreateDatabaseXmlDataTest extends CreateDatasetXml{
     @Before
     public void init_DB() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {

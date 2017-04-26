@@ -30,6 +30,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+/**
+ * 将数据库数据转换成xml工具
+ * @author lin.pu
+ *
+ */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextHierarchy({ 
 		@ContextConfiguration("classpath:spring/spring-db.xml"),
@@ -51,9 +56,8 @@ public class CreateDatasetXml {
     
 
     /**
-     * backup the whole DB
-     * 
-     * @Title: backupAll
+     * 导出所有数据库数据
+     * @param path 导出数据存放文件路径
      * @throws Exception
      */
     public void backupAll(String path) throws Exception {
@@ -74,10 +78,9 @@ public class CreateDatasetXml {
 	}
 
     /**
-     * back specified DB table
-     * 
-     * @Title: backupCustom
-     * @param tableName
+     * 备份数据库指定表数据
+     * @param path 数据存放文件路径
+     * @param tableName 表名
      * @throws Exception
      */
     public void backupCustom(String path,String... tableName) throws Exception {
@@ -92,10 +95,9 @@ public class CreateDatasetXml {
 
     }
     /**
-     * back specified DB table
-     * 
-     * @Title: backupCustom
-     * @param tableName
+     * 备份指定查询数据
+     * @param path 数据存放文件路径
+     * @param queryBean 查询集合
      * @throws Exception
      */
     public void backupQuery(String path,QueryBean queryBean) throws Exception {
@@ -116,10 +118,10 @@ public class CreateDatasetXml {
         FlatXmlDataSet.write(qds, fw, "UTF-8");
 
     }
-	/**
-     * 
-     * @Title: getXmlDataSet
-     * @param name
+
+    /**
+     * 读取指定测试用例数据
+     * @param name 用例数据
      * @return
      * @throws DataSetException
      * @throws IOException
