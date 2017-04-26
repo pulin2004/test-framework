@@ -57,8 +57,7 @@ public class SampleControllerTest extends BaseAssembleTest {
 		DatabaseOperation.CLEAN_INSERT.execute(getConn(), dataSet);
 	}
 
-	@Test
-	public void testview() throws Exception {
+	@Test	public void testview() throws Exception {
 		// 测试普通控制器
 		mockMvc.perform(get("/sample/{id}", 21)) // 执行请求
 				.andExpect(model().attributeExists("bean")) // 验证存储模型数据
@@ -106,7 +105,8 @@ public class SampleControllerTest extends BaseAssembleTest {
 }
 </pre>
 <p>数据文件样例：<a href="https://github.com/pulin2004/test-framework/blob/master/src/test/resources/testcase/assembly/sample/init/init_db.xml">init_db.xml</a></P>
-
+<h2>service层测试</h2>
+<p>service层测试属于单元测试，是针对各个方
 <P>测试框架配置</P>
 <P>cotroller测试</P>
 <P>dao层测试</P>
