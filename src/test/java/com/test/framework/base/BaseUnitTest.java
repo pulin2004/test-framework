@@ -1,15 +1,15 @@
 package com.test.framework.base;
 
+import org.databene.feed4junit.Feeder;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.ContextHierarchy;
 import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(Feeder.class)
 @WebAppConfiguration(value = "test.framwork/src/main/webapp")
 //@TransactionConfiguration(transactionManager = "transactionManager",defaultRollback = false) 
 //@Transactional
