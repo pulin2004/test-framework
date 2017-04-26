@@ -16,6 +16,11 @@ import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import com.sample.mvc.bean.SampleBean;
 import com.test.framework.base.BaseDaoTest;
 
+/**
+ * dao层测试样例
+ * @author lin.pu
+ *
+ */
 public class SampleDaoTest extends BaseDaoTest{
 
 	@Autowired
@@ -33,14 +38,16 @@ public class SampleDaoTest extends BaseDaoTest{
 	  @Test
 	  public void updateTest() throws IOException, SQLException, DatabaseUnitException
 	  {
+		  //输入参数准备
 		  SampleBean bean = new SampleBean();
-
 		   bean.setAddress("广西");
 		   bean.setAge(19);
 		   bean.setId(13L);
 		   bean.setName("name27");
 		   bean.setPhone("13982983393");
+		   //调用测试方法
 		  sampleDao.updateTest(bean);
+		  //数据库数据和预期数据文件对比
 		  assertDBEquals("sample"+File.separator+"expect_db.xml","sample");
 	  }
 	  
@@ -48,7 +55,6 @@ public class SampleDaoTest extends BaseDaoTest{
 	  public void updateTest2() throws IOException, SQLException, DatabaseUnitException
 	  {
 		  SampleBean bean = new SampleBean();
-
 		   bean.setAddress("广西");
 		   bean.setAge(20);
 		   bean.setId(13L);

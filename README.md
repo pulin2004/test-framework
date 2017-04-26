@@ -162,6 +162,44 @@ public class SwitchUtilsTest extends BaseUnitTest {
 <p>数据文件样例：<a href="https://github.com/pulin2004/test-framework/blob/master/src/test/resources/testcase/switch.xls">switch.xls</a></P>
 <img alt="20170426153002.png" src="/pulin2004/test-framework/blob/master/doc/pic/20170426153002.png?raw=true">
 <h2>dao层测试</h2>
+<p>dao层是数据访问层，对该层测试采用连着数据库一起测试，因此dao层测试必须解决数据库环境和数据库数据断言验证。dao层测试用例继承BaseDaoTest基类。测试样例：</p>
+<pre>
+/**
+ * dao层测试样例
+ * @author lin.pu
+ *
+ */
+public class SampleDaoTest extends BaseDaoTest{
+
+	@Autowired
+	private SampleDao sampleDao;
+	
+	  @Before
+	    public void setUp() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {
+
+	    	//加载数据库文本数据
+	        IDataSet dataSet = getXmlDataSet("sample"+File.separator+"init_db.xml");
+	        //将数据加载到数据库中
+	        DatabaseOperation.CLEAN_INSERT.execute(getConn(),dataSet); 
+	    }
+	  
+	  @Test
+	  public void updateTest() throws IOException, SQLException, DatabaseUnitException
+	  {
+		  //输入参数准备
+		  SampleBean bean = new SampleBean();
+		   bean.setAddress("广西");
+		   bean.setAge(19);
+		   bean.setId(13L);
+		   bean.setName("name27");
+		   bean.setPhone("13982983393");
+		   //调用测试方法
+		  sampleDao.updateTest(bean);
+		  //数据库数据和预期数据文件对比
+		  assertDBEquals("sample"+File.separator+"expect_db.xml","sample");
+	  }
+</pre>
+</ul>
 <P>测试框架配置</P>
 <P>cotroller测试</P>
 <P>dao层测试</P>
