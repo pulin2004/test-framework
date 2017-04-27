@@ -10,6 +10,7 @@
 </ul>
 <P>随着微服务技术发展，特别是DevOps概念提出，要求开发->测试->部署完全自动化，因此自动化测试成为微服务技术不可或缺的一部分，测试用例贯穿微服务全生命之中，是微服务持续进化的保障。本测试框架主要为满足微服务技术发展要求，实现代码（白盒）和功能（黑盒）测试一体化。</P>
 <p>相关文章</p>
+<a href="https://github.com/pulin2004/test-framework/blob/master/doc/tdd_manage.md">测试与项目管理</a>
 <a href="http://www.cnblogs.com/blsong/p/4602001.html">测试驱动开发实践 - Test-Driven Development</a>
 <h1>配置</h1>
 <ul>
