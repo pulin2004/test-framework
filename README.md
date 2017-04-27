@@ -9,7 +9,8 @@
 <li>降低开发人员对业务理解的门槛</li>
 </ul>
 <P>随着微服务技术发展，特别是DevOps概念提出，要求开发->测试->部署完全自动化，因此自动化测试成为微服务技术不可或缺的一部分，测试用例贯穿微服务全生命之中，是微服务持续进化的保障。本测试框架主要为满足微服务技术发展要求，实现代码（白盒）和功能（黑盒）测试一体化。</P>
-
+<p>相关文章</p>
+<a href="http://www.cnblogs.com/blsong/p/4602001.html">测试驱动开发实践 - Test-Driven Development</a>
 <h1>配置</h1>
 <ul>
 <li>测试框架基于junit测试框架，集成spring test、dbunit、mockito、feed4junit等多个测试组件，把框架pom.xml中的<scope>test</scope>的配置拷贝到项目中。</li>
