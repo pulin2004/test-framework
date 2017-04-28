@@ -18,50 +18,49 @@ import com.test.framework.base.BaseDaoTest;
 
 /**
  * dao层测试样例
+ * 
  * @author lin.pu
  *
  */
-public class SampleDaoTest extends BaseDaoTest{
+public class SampleDaoTest extends BaseDaoTest {
 
 	@Autowired
 	private SampleDao sampleDao;
-	
-	  @Before
-	    public void setUp() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {
 
-	    	//加载数据库文本数据
-	        IDataSet dataSet = getXmlDataSet("sample"+File.separator+"init_db.xml");
-	        //将数据加载到数据库中
-	        DatabaseOperation.CLEAN_INSERT.execute(getConn(),dataSet); 
-	    }
-	  
-	  @Test
-	  public void updateTest() throws IOException, SQLException, DatabaseUnitException
-	  {
-		  //输入参数准备
-		  SampleBean bean = new SampleBean();
-		   bean.setAddress("广西");
-		   bean.setAge(19);
-		   bean.setId(13L);
-		   bean.setName("name27");
-		   bean.setPhone("13982983393");
-		   //调用测试方法
-		  sampleDao.updateTest(bean);
-		  //数据库数据和预期数据文件对比
-		  assertDBEquals("sample"+File.separator+"expect_db.xml","sample");
-	  }
-	  
-	  @Test
-	  public void updateTest2() throws IOException, SQLException, DatabaseUnitException
-	  {
-		  SampleBean bean = new SampleBean();
-		   bean.setAddress("广西");
-		   bean.setAge(20);
-		   bean.setId(13L);
-		   bean.setName("name27");
-		   bean.setPhone("13982983393");
-		  sampleDao.updateTest(bean);
-		  assertDBEqualsIgnoreCols("sample"+File.separator+"expect_db.xml","sample","age");
-	
-	  }
+	@Before
+	public void setUp() throws CannotGetJdbcConnectionException, DatabaseUnitException, IOException, SQLException {
+
+		// 加载数据库文本数据
+		IDataSet dataSet = getXmlDataSet("sample" + File.separator + "init_db.xml");
+		// 将数据加载到数据库中
+		DatabaseOperation.CLEAN_INSERT.execute(getConn(), dataSet);
+	}
+
+	@Test
+	public void updateTest() throws IOException, SQLException, DatabaseUnitException {
+		// 输入参数准备
+		SampleBean bean = new SampleBean();
+		bean.setAddress("广西");
+		bean.setAge(19);
+		bean.setId(13L);
+		bean.setName("name27");
+		bean.setPhone("13982983393");
+		// 调用测试方法
+		sampleDao.updateTest(bean);
+		// 数据库数据和预期数据文件对比
+		assertDBEquals("sample" + File.separator + "expect_db.xml", "sample");
+	}
+
+	@Test
+	public void updateTest2() throws IOException, SQLException, DatabaseUnitException {
+		SampleBean bean = new SampleBean();
+		bean.setAddress("广西");
+		bean.setAge(20);
+		bean.setId(13L);
+		bean.setName("name27");
+		bean.setPhone("13982983393");
+		sampleDao.updateTest(bean);
+		assertDBEqualsIgnoreCols("sample" + File.separator + "expect_db.xml", "sample", "age");
+
+	}
 }
