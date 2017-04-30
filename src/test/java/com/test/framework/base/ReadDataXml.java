@@ -54,7 +54,8 @@ public class ReadDataXml {
 	}
 
 	private static String toJavaPattern(String pattern) {
-		String s = StringUtils.replace(pattern, "*", ".*");
+		String s = StringUtils.replace(pattern, ".", "\\.");
+		s = StringUtils.replace(s, "*", ".*");
 		return s + "$";
 	}
 

@@ -12,6 +12,7 @@ public class ReadDataXmlTest {
 		Assert.assertTrue(ReadDataXml.wildMatch("W*.java","wie.java"));
 		Assert.assertTrue(ReadDataXml.wildMatch("w*.java","wie.java"));
 		Assert.assertFalse(ReadDataXml.wildMatch("w*.java","aie.JAVA"));
+		Assert.assertFalse(ReadDataXml.wildMatch("w*.java","wieJAVA"));
 		Assert.assertFalse(ReadDataXml.wildMatch("w*.java","aie.javae"));
 		Assert.assertFalse(ReadDataXml.wildMatch("w*.java","aie.jav"));
 
