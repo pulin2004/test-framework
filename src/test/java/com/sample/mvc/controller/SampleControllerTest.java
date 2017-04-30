@@ -16,14 +16,8 @@ import java.util.List;
 
 import org.databene.commons.Assert;
 import org.dbunit.DatabaseUnitException;
-import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.database.QueryDataSet;
-import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.ReplacementDataSet;
-import org.dbunit.dataset.excel.XlsDataSet;
 import org.dbunit.operation.DatabaseOperation;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -91,6 +85,17 @@ public class SampleControllerTest extends BaseAssembleTest {
 		Assert.isTrue(JsonCompareUtils.jsonEquals(lst, json), "返回结果json对象与预期不一致");
 	}
 
-
+//	@Test
+//	@Source("feedData.xls")//CSV source
+//	public void testviewForFeed(Long id,String name) throws Exception {
+//		// 测试普通控制器
+//		mockMvc.perform(get("/sample/{id}", id)) // 执行请求
+//				.andExpect(model().attributeExists("bean")) // 验证存储模型数据
+//				.andExpect(model().attribute("bean", hasProperty("name", equalTo(name)))) // 验证存储模型数据
+//				.andExpect(view().name("user/view")) // 验证viewName
+//				.andExpect(forwardedUrl("/WEB-INF/jsp/user/view.jsp"))// 验证视图渲染时forward到的jsp
+//				.andExpect(status().isOk())// 验证状态码
+//				.andDo(print()); // 输出MvcResult到控制台
+//	}
 
 }

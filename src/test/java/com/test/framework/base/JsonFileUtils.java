@@ -29,7 +29,7 @@ public class JsonFileUtils {
 		return readJson(file);
 	}
 
-	private static String readJson(File file) {
+	public static String readJson(File file) {
 		BufferedReader reader = null;
 		// 返回值,使用StringBuffer
 		StringBuffer data = new StringBuffer();
